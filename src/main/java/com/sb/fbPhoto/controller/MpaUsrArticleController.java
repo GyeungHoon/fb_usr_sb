@@ -3,9 +3,8 @@ package com.sb.fbPhoto.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.sb.fbPhoto.dto.Article;
+import com.sb.fbPhoto.dto.ResultData;
 
 @Controller
 public class MpaUsrArticleController {
@@ -22,24 +21,6 @@ public class MpaUsrArticleController {
 
 		articleLastId = id;
 
-		return new ResultData("S-1", id + "번 글이 작성되었습니다.", article);
+		return new ResultData("S-1", id + "번 글이 작성되었습니다.", "article",article);
 	}
-}
-
-@AllArgsConstructor
-@Data
-class ResultData {
-	private String resultData;
-	private String msg;
-	private Article article;
-}
-
-@AllArgsConstructor
-@Data
-class Article {
-	private int id;
-	private String regDate;
-	private String updateDate;
-	private String title;
-	private String body;
 }
