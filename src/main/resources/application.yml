@@ -1,2 +1,10 @@
 server:
   port: 8024
+  
+  
+spring:
+ datasource:
+   url: jdbc:[Database]://localhost:3306/[Database스키마]
+   username: 
+   password: 
+   driver-class-name: 
