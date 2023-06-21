@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sb.fbPhoto.dto.Article;
 import com.sb.fbPhoto.dto.ResultData;
+import com.sb.fbPhoto.util.Util;
 
 @Controller
 public class MpaUsrArticleController {
@@ -24,6 +25,12 @@ public class MpaUsrArticleController {
 	@RequestMapping("/mpaUsr/article/doWrite")
 	@ResponseBody
 	public ResultData doWrite(String title, String body) {
+		if (Util.isEmpty(title)) {
+			return new ResultData("F-1", "제목을 입력해주세요");
+		}
+		if (Util.isEmpty(body)) {
+			return new ResultData("F-2", "내용을 입력해주세요");
+		}
 		int id = writeArticle(title, body);
 		Article article = getArticleById(id);
 
@@ -32,7 +39,17 @@ public class MpaUsrArticleController {
 
 	@RequestMapping("/mpaUsr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(int id, String title, String body) {
+	public ResultData doModify(Integer id, String title, String body) {
+		if (Util.isEmpty(id)) {
+			return new ResultData("F-1", "번호를 입력해주세요");
+		}
+		
+		if (Util.isEmpty(title)) {
+			return new ResultData("F-2", "제목을 입력해주세요");
+		}
+		if (Util.isEmpty(body)) {
+			return new ResultData("F-3", "내용을 입력해주세요");
+		}
 		boolean modified = modifyArticle(id, title, body);
 		if (modified == false) {
 			return new ResultData("F-1", id + "번 글이 존재하지 않습니다.", "id", id);
@@ -74,7 +91,7 @@ public class MpaUsrArticleController {
 		article.setUpdateDate(Util.getNowDateStr());
 		article.setTitle(title);
 		article.setBody(body);
-		
+
 		return true;
 	}
 

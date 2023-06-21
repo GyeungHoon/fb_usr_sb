@@ -149,18 +149,14 @@ public class Util {
 		} else if (data instanceof Integer) {
 			Integer integerData = (Integer) data;
 
-			return integerData != 0;
-		} else if (data instanceof List) {
-			List listData = (List) data;
-
-			return listData.isEmpty();
-		} else if (data instanceof Map) {
+			return integerData == 0;
+		}  else if (data instanceof Map) {
 			Map mapData = (Map) data;
 
 			return mapData.isEmpty();
 		}
 
-		return true;
+		return false;
 	}
 
 	public static <T> T ifEmpty(T data, T defaultValue) {
