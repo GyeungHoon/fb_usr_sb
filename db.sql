@@ -1,7 +1,7 @@
 # DB 생성
-DROP DATABASE IF EXISTS galleryboast;
-CREATE DATABASE galleryboast;
-USE galleryboast;
+DROP DATABASE IF EXISTS photoboast;
+CREATE DATABASE photoboast;
+USE photoboast;
 
 # 게시물 테이블 생성
 CREATE TABLE article (
