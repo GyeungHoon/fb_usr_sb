@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.sb.fbPhoto.dao.ArticleDao;
 import com.sb.fbPhoto.dto.Article;
+import com.sb.fbPhoto.dto.Board;
 import com.sb.fbPhoto.dto.ResultData;
 
 @Service
@@ -43,7 +44,7 @@ public class ArticleService {
 
 		articleDao.deleteArticleById(id);
 
-		return new ResultData("S-1", id + "번 게시물이 삭제되었습니다.", "id", id);
+		return new ResultData("S-1", id + "번 게시물이 삭제되었습니다.", "id", id, "boardId", article.getBoardId());
 	}
 
 	public ResultData writeArticle(String title, String body) {
@@ -57,5 +58,15 @@ public class ArticleService {
 
 	public Article getArticleById(int id) {
 		return articleDao.getArticleById(id);
+	}
+
+	public Board getBoardById(int id) {
+		
+		return articleDao.getBoardById(id);
+	}
+
+	public int getArticlesTotalCount(int boardId) {
+		
+		return articleDao.getArticlesTotalCount(boardId);
 	}
 }
