@@ -66,6 +66,13 @@ public class MpaUsrArticleController {
 		return articleService.deleteArticleById(id);
 	}
 
+	@RequestMapping("/mpaUsr/article/list")
+	public String showList(int boardId) {
+		
+		return "mpaUsr/article/list";
+
+	}
+
 	@RequestMapping("/mpaUsr/article/getArticle")
 	@ResponseBody
 	public ResultData getArticle(Integer id) {
