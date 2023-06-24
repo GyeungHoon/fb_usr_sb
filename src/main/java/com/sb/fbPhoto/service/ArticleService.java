@@ -1,5 +1,7 @@
 package com.sb.fbPhoto.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,12 +63,18 @@ public class ArticleService {
 	}
 
 	public Board getBoardById(int id) {
-		
 		return articleDao.getBoardById(id);
 	}
 
 	public int getArticlesTotalCount(int boardId) {
-		
 		return articleDao.getArticlesTotalCount(boardId);
+	}
+
+	public List<Article> getForPrintArticles(int boardId, int itemsCountInAPage, int page) {
+		int limitFrom = (page - 1) * itemsCountInAPage;
+		int limitTake = itemsCountInAPage;
+		
+		return articleDao.getForPrintArticles(boardId, limitFrom, limitTake);
+		
 	}
 }

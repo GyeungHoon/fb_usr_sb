@@ -2,10 +2,11 @@ package com.sb.fbPhoto.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-public @AllArgsConstructor
+import lombok.NoArgsConstructor;
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-class Board {
+public class Board {
 	private int id;
 	private String regDate;
 	private String updateDate;
