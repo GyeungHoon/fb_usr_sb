@@ -35,6 +35,9 @@ let ArticleWrite__submitFormDone = false;
 <div class="section section-article-list">
 	<div class="container mx-auto">
 	    <form method="POST" action="doWrite" onsubmit="ArticleWrite__submitForm(this); return false;">
+	    
+	    <input type="hidden" name="boardId" value="${board.Id}" />
+	    
 	        <div class="form-control">
                 <label class="label">
                     제목
