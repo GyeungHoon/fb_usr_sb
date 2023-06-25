@@ -25,17 +25,53 @@
 
 		<hr />
 		<hr />
-		<div class="search-form-box mt-2">
+		<div class="search-form-box mt-2 px-4">
 			<form action="" class="grid gap-2">
 				<input type="hidden" name="boardId" value="${board.id }" />
-				<input value="${param.searchKeyword }" class="input input-borderd"
-					name="searchKeyword" type="text" placeholder="검색어를 입력해주세요"
-					maxlength="10" />
-				<input type="submit" class="btn btn-sm btn-primary" value="검색" />
+
+				<div class="form-control">
+					<label class="label">
+						<span class="label-text">옵션</span>
+					</label>
+					<select class="select select-bordered" name="searchKeywordType">
+						<option value="titleAndBody" selected="selected">제목+내용</option>
+						<option value="title">제목</option>
+						<option value="body">내용</option>
+					</select>
+					<script>
+						const param__searchKeywordType = '${param.searchKeywordType}';
+						if (param__searchKeywordType.length > 0) {
+							$(
+									'.search-form-box form [name="searchKeywordType"]')
+									.val('${param.searchKeywordType}');
+						}
+					</script>
+				</div>
+
+				<div class="form-control">
+					<label class="label">
+						<span class="label-text">제목</span>
+					</label>
+					<input value="${param.searchKeyword }" class="input input-borderd"
+						name="searchKeyword" type="text" placeholder="검색어를 입력해주세요"
+						maxlength="10" />
+				</div>
+
+				<div class="form-control">
+					<label class="label">
+						<span class="label-text">검색</span>
+					</label>
+					<input type="submit" class="btn btn-sm btn-primary" value="검색" />
+				</div>
+
+
 			</form>
 		</div>
 
 		<div class="articles mt-2">
+			<c:if test="${articles == null || articles.size() == 0}">
+				검색결과가 존재하지 않습니다.
+			</c:if>
 			<c:forEach items="${articles}" var="article">
 				<div>
 					ID : ${article.id}
@@ -48,6 +84,16 @@
 					<br>
 				</div>
 				<hr />
+			</c:forEach>
+		</div>
+
+		<div class="article-pages">
+			<c:forEach var="i" begin="1" end="${totalPage}">
+				<c:set var="url" value="?boardId=${board.id}"></c:set>
+				<c:set var="url" value="${url}&searchKeywordType=${param.searchKeywordType}"></c:set>
+				<c:set var="url" value="${url}&searchKeyword=${param.searchKeyword}"></c:set>
+				<c:set var="url" value="${url}&page=${i}"></c:set>
+				<a class="text-lg ${page == i ?'text-red-500' : ''}" href="${url }">${i}</a>
 			</c:forEach>
 		</div>
 	</div>
