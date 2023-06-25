@@ -36,7 +36,7 @@ let ArticleWrite__submitFormDone = false;
 	<div class="container mx-auto">
 	    <form method="POST" action="doWrite" onsubmit="ArticleWrite__submitForm(this); return false;">
 	    
-	    <input type="hidden" name="boardId" value="${board.Id}" />
+	    <input type="hidden" name="boardId" value="${board.id}" />
 	    
 	        <div class="form-control">
                 <label class="label">
