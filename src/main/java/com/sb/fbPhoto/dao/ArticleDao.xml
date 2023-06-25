@@ -4,20 +4,50 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sb.fbPhoto.dao.ArticleDao">
-<select id="getArticlesTotalCount" resultType="int">
+	<select id="getArticlesTotalCount" resultType="int">
 		SELECT COUNT(*) AS cnt
 		FROM article AS A
 		WHERE A.boardId = #{boardId}
+		<if test="searchKeyword != null">
+			<if test="searchKeywordType == 'titleAndBody'">
+				AND (
+				A.title LIKE CONCAT('%',#{searchKeyword},'%')
+				OR
+				A.body LIKE CONCAT('%',#{searchKeyword},'%')
+				)
+			</if>
+			<if test="searchKeywordType == 'title'">
+				AND A.title LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchKeywordType == 'body'">
+				AND A.body LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+		</if>
 		AND A.delStatus = 0
-</select>
+	</select>
 
-<select id="getForPrintArticles" resultType="Article">
-	SELECT *
-	FROM article AS A
-	WHERE A.boardId = #{boardId}
-	ORDER BY A.id DESC
-	LIMIT #{limitFrom}, #{limitTake};
-</select>
+	<select id="getForPrintArticles" resultType="Article">
+		SELECT *
+		FROM article AS A
+		WHERE A.boardId = #{boardId}
+			<if test="searchKeyword != null">
+			<if test="searchKeywordType == 'titleAndBody'">
+				AND (
+				A.title LIKE CONCAT('%',#{searchKeyword},'%')
+				OR
+				A.body LIKE CONCAT('%',#{searchKeyword},'%')
+				)
+			</if>
+			<if test="searchKeywordType == 'title'">
+				AND A.title LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchKeywordType == 'body'">
+				AND A.body LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+		</if>
+		ORDER BY A.id DESC
+		LIMIT #{limitFrom}, #{limitTake};
+	</select>
 
 	<select id="getBoardById" resultType="Board">
 		SELECT *
@@ -32,7 +62,7 @@
 		WHERE A.id = #{id}
 		AND A.delStatus = 0
 	</select>
-	
+
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
@@ -49,7 +79,8 @@
 	<insert id="writeArticle">
 		INSERT INTO article
 		SET regDate = NOW(),
-		updateDate = NOW(),
+		updateDate =
+		NOW(),
 		boardId = #{boardId},
 		memberId = #{memberId},
 		title = #{title},
@@ -60,7 +91,8 @@
 		UPDATE article
 		SET delStatus = 1,
 		delDate = NOW()
-		WHERE id = #{id}
+		WHERE
+		id = #{id}
 	</update>
 
 </mapper>
