@@ -22,12 +22,15 @@
 			<span>CURRENT PAGE : </span>
 			<span>${page}</span>
 		</div>
-		
+
 		<hr />
 		<hr />
 		<div class="search-form-box mt-2">
 			<form action="" class="grid gap-2">
-				<input class="input input-borderd" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요" maxlength="10"/>
+				<input type="hidden" name="boardId" value="${board.id }" />
+				<input value="${param.searchKeyword }" class="input input-borderd"
+					name="searchKeyword" type="text" placeholder="검색어를 입력해주세요"
+					maxlength="10" />
 				<input type="submit" class="btn btn-sm btn-primary" value="검색" />
 			</form>
 		</div>
