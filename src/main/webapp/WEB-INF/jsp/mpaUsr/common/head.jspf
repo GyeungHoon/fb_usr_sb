@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="/resource/common.css" />
 <script src="/resource/common.js" defer></script>
 
-<title>안녕</title>
+<title>PhotoBoast</title>
 </head>
 <body>
 	<div class="site-wrap">
@@ -32,7 +32,7 @@
 					<span>
 						<i class="fas fa-lemon"></i>
 					</span>
-					<span class="hidden sm:block">&nbsp;INSTA</span>
+					<span class="hidden sm:block">&nbsp;PhotoBoast</span>
 				</a>
 
 				<div class="flex-grow"></div>

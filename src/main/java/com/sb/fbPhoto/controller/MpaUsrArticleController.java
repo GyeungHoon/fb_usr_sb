@@ -15,8 +15,6 @@ import com.sb.fbPhoto.dto.Board;
 import com.sb.fbPhoto.dto.ResultData;
 import com.sb.fbPhoto.service.ArticleService;
 import com.sb.fbPhoto.util.Util;
-
-import lombok.extern.slf4j.Slf4j;
 @Controller
 public class MpaUsrArticleController {
 
