@@ -100,7 +100,7 @@ let MemberJoin__submitFormDone = false;
 			</div>
 			<div class="form-control">
 				<label class="label">휴대전화번호</label>
-				<input class="input input-bordered w-full" type="tel" maxlength="30" name="cellphonNo" placeholder="휴대전화번호를 입력해주세요" />
+				<input class="input input-bordered w-full" type="tel" maxlength="30" name="cellphoneNo" placeholder="휴대전화번호를 입력해주세요" />
 			</div>
 			<div class="form-control">
 				<label class="label">이메일</label>

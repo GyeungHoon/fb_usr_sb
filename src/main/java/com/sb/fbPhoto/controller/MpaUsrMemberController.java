@@ -1,29 +1,40 @@
 package com.sb.fbPhoto.controller;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sb.fbPhoto.dto.Member;
+import com.sb.fbPhoto.dto.ResultData;
+import com.sb.fbPhoto.service.MemberService;
 import com.sb.fbPhoto.util.Util;
 
 @Controller
 public class MpaUsrMemberController {
+    @Autowired
+    private MemberService memberService;
 
-	@RequestMapping("/mpaUsr/member/join")
-	public String showJoin(HttpServletRequest req) {
-		return "mpaUsr/member/join";
-	}
-	
-	@RequestMapping("/mpaUsr/member/doJoin")
-	@ResponseBody
-	public Map doJoin(String loginId, String loginPw, String nmae, String nickname, String cellphonNo, String email) {
-		
-		return Util.mapOf("loginId",loginId,"loginPw",loginPw);
-		
-	}
+    @RequestMapping("/mpaUsr/member/join")
+    public String showJoin(HttpServletRequest req) {
+        return "mpaUsr/member/join";
+    }
 
+    @RequestMapping("/mpaUsr/member/doJoin")
+    public String doJoin(HttpServletRequest req, String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
+        Member oldMember = memberService.getMemberByLoginId(loginId);
+
+        if (oldMember != null) {
+            return Util.msgAndBack(req, loginId + "(은)는 이미 사용중인 로그인아이디 입니다.");
+        }
+
+        ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+
+        if (joinRd.isFail()) {
+            return Util.msgAndBack(req, joinRd.getMsg());
+        }
+
+        return Util.msgAndReplace(req, joinRd.getMsg(), "/");
+    }
 }
