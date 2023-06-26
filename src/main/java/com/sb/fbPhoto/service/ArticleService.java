@@ -83,4 +83,8 @@ public class ArticleService {
 
 		return articleDao.getForPrintArticles(boardId, searchKeywordType, searchKeyword, limitFrom, limitTake);
 	}
+
+	public Article getForPrintArticleById(int id) {
+		return articleDao.getForPrintArticleById(id);
+	}
 }
