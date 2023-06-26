@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sb.fbPhoto.dao.MemberDao">
-	<select id="getMemberByLoginId" resultType="Member">
+	 <select id="getMemberByLoginId" resultType="Member">
         SELECT *
         FROM `member` AS M
         WHERE M.loginId = #{loginId}
