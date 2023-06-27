@@ -64,13 +64,13 @@
 								</ul>
 							</div></li>
 						<c:if test="${req.isLogined() }">
-							<li><a href="#" class="h-full flex items-center px-5"> <span>
+							<li><a href="../member/doLogout" class="h-full flex items-center px-5"> <span>
 										<i class="fas fa-sign-out-alt"></i>
 								</span> <span class="hidden md:block">&nbsp;LOGOUT</span>
 							</a></li>
 						</c:if>
 						<c:if test="${req.isLogined() }">
-							<li><a href="#" class="h-full flex items-center px-5"> <span>
+							<li><a href="../member/mypage" class="h-full flex items-center px-5"> <span>
 										<i class="fas fa-sign-out-alt"></i>
 								</span> <span class="hidden md:block">&nbsp;${req.getLoginedMemberNickname()}＇s MY PAGE</span>
 							</a></li>
