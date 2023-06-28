@@ -13,53 +13,78 @@ function MemberJoin__submitForm(form) {
     if ( MemberJoin__submitFormDone ) {
         return;
     }
+
     form.loginId.value = form.loginId.value.trim();
+
     if ( form.loginId.value.length == 0 ) {
         alert('로그인아이디를 입력해주세요.');
         form.loginId.focus();
+
         return;
     }
+
     form.loginPw.value = form.loginPw.value.trim();
+
     if ( form.loginPw.value.length == 0 ) {
         alert('로그인비밀번호을 입력해주세요.');
         form.loginPw.focus();
+
         return;
     }
+
     form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+
     if ( form.loginPwConfirm.value.length == 0 ) {
         alert('로그인비밀번호 확인을 입력해주세요.');
         form.loginPwConfirm.focus();
+
         return;
     }
+
     if ( form.loginPw.value != form.loginPwConfirm.value ) {
         alert('로그인비밀번호가 일치하지 않습니다.');
         form.loginPwConfirm.focus();
+
         return;
     }
+
     form.name.value = form.name.value.trim();
+
     if ( form.name.value.length == 0 ) {
         alert('이름을 입력해주세요.');
         form.name.focus();
+
         return;
     }
+
     form.nickname.value = form.nickname.value.trim();
+
     if ( form.nickname.value.length == 0 ) {
         alert('별명을 입력해주세요.');
         form.nickname.focus();
+
         return;
     }
+
     form.cellphoneNo.value = form.cellphoneNo.value.trim();
+
     if ( form.cellphoneNo.value.length == 0 ) {
         alert('휴대전화번호를 입력해주세요.');
         form.cellphoneNo.focus();
+
         return;
     }
+
+
     form.email.value = form.email.value.trim();
+
     if ( form.email.value.length == 0 ) {
         alert('이메일을 입력해주세요.');
         form.email.focus();
+
         return;
     }
+
     form.submit();
     MemberJoin__submitFormDone = true;
 }

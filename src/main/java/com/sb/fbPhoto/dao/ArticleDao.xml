@@ -9,18 +9,18 @@
 		FROM article AS A
 		WHERE A.boardId = #{boardId}
 		<if test="searchKeyword != null">
-			<if test="searchKeywordType == 'titleAndBody'">
+			<if test="searchKeywordTypeCode == 'titleAndBody'">
 				AND (
-				A.title LIKE CONCAT('%',#{searchKeyword},'%')
+				A.title LIKE CONCAT('%', #{searchKeyword}, '%')
 				OR
-				A.body LIKE CONCAT('%',#{searchKeyword},'%')
+				A.body LIKE CONCAT('%', #{searchKeyword}, '%')
 				)
 			</if>
-			<if test="searchKeywordType == 'title'">
-				AND A.title LIKE CONCAT('%',#{searchKeyword},'%')
+			<if test="searchKeywordTypeCode == 'title'">
+				AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
-			<if test="searchKeywordType == 'body'">
-				AND A.body LIKE CONCAT('%',#{searchKeyword},'%')
+			<if test="searchKeywordTypeCode == 'body'">
+				AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
 		</if>
 		AND A.delStatus = 0
@@ -30,19 +30,19 @@
 		SELECT *
 		FROM article AS A
 		WHERE A.boardId = #{boardId}
-			<if test="searchKeyword != null">
-			<if test="searchKeywordType == 'titleAndBody'">
+		<if test="searchKeyword != null">
+			<if test="searchKeywordTypeCode == 'titleAndBody'">
 				AND (
-				A.title LIKE CONCAT('%',#{searchKeyword},'%')
+				A.title LIKE CONCAT('%', #{searchKeyword}, '%')
 				OR
-				A.body LIKE CONCAT('%',#{searchKeyword},'%')
+				A.body LIKE CONCAT('%', #{searchKeyword}, '%')
 				)
 			</if>
-			<if test="searchKeywordType == 'title'">
-				AND A.title LIKE CONCAT('%',#{searchKeyword},'%')
+			<if test="searchKeywordTypeCode == 'title'">
+				AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
-			<if test="searchKeywordType == 'body'">
-				AND A.body LIKE CONCAT('%',#{searchKeyword},'%')
+			<if test="searchKeywordTypeCode == 'body'">
+				AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
 		</if>
 		ORDER BY A.id DESC
@@ -51,9 +51,9 @@
 
 	<select id="getBoardById" resultType="Board">
 		SELECT *
-		FROM board AS A
-		WHERE A.id = #{id}
-		AND A.delStatus = 0
+		FROM board AS B
+		WHERE B.id = #{id}
+		AND B.delStatus = 0
 	</select>
 
 	<select id="getArticleById" resultType="Article">
@@ -62,17 +62,16 @@
 		WHERE A.id = #{id}
 		AND A.delStatus = 0
 	</select>
-	
+
 	<select id="getForPrintArticleById" resultType="Article">
-		SELECT A.*, 
-		IFNULL(M.name,"삭제된_회원") AS extra__writerName
+		SELECT A.*,
+		IFNULL(M.name, "삭제된_회원") AS extra__writerName
 		FROM article AS A
 		LEFT JOIN member AS M
 		ON A.memberId = M.id
 		WHERE A.id = #{id}
 		AND A.delStatus = 0
 	</select>
-	
 
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()

@@ -9,6 +9,7 @@ import com.sb.fbPhoto.dao.ArticleDao;
 import com.sb.fbPhoto.dto.Article;
 import com.sb.fbPhoto.dto.Board;
 import com.sb.fbPhoto.dto.ResultData;
+
 @Service
 public class ArticleService {
 	@Autowired
@@ -48,8 +49,7 @@ public class ArticleService {
 		return new ResultData("S-1", id + "번 게시물이 삭제되었습니다.", "id", id, "boardId", article.getBoardId());
 	}
 
-	public ResultData writeArticle(int boardId,int memberId, String title, String body) {
-		
+	public ResultData writeArticle(int boardId, int memberId, String title, String body) {
 		articleDao.writeArticle(boardId, memberId, title, body);
 		int id = articleDao.getLastInsertId();
 
@@ -64,15 +64,15 @@ public class ArticleService {
 		return articleDao.getBoardById(id);
 	}
 
-	public int getArticlesTotalCount(int boardId, String searchKeywordType, String searchKeyword) {
+	public int getArticlesTotalCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {
 		if (searchKeyword != null && searchKeyword.length() == 0) {
 			searchKeyword = null;
 		}
 
-		return articleDao.getArticlesTotalCount(boardId, searchKeywordType, searchKeyword);
+		return articleDao.getArticlesTotalCount(boardId, searchKeywordTypeCode, searchKeyword);
 	}
 
-	public List<Article> getForPrintArticles(int boardId, String searchKeywordType, String searchKeyword,
+	public List<Article> getForPrintArticles(int boardId, String searchKeywordTypeCode, String searchKeyword,
 			int itemsCountInAPage, int page) {
 		if (searchKeyword != null && searchKeyword.length() == 0) {
 			searchKeyword = null;
@@ -81,7 +81,7 @@ public class ArticleService {
 		int limitFrom = (page - 1) * itemsCountInAPage;
 		int limitTake = itemsCountInAPage;
 
-		return articleDao.getForPrintArticles(boardId, searchKeywordType, searchKeyword, limitFrom, limitTake);
+		return articleDao.getForPrintArticles(boardId, searchKeywordTypeCode, searchKeyword, limitFrom, limitTake);
 	}
 
 	public Article getForPrintArticleById(int id) {

@@ -8,36 +8,39 @@
 <%@ include file="../common/head.jspf"%>
 
 <script>
+let ArticleWrite__submitFormDone = false;
+function ArticleWrite__submitForm(form) {
+    if ( ArticleWrite__submitFormDone ) {
+        return;
+    }
 
-let ArticleWrite__submitFormDone = false; 
-	function ArticleWrite__submitForm() {
-		if(ArticleWrite__submitFormDone){
-			return
-		}
-		form.title.value = form.title.value.trim();
-		
-		if(form.title.value.length ==0){
-			alert('제목을 입력해주세요.');	
-			form.title.focus();
-			return 
-		}
-		form.body.value = form.body.value.trim();
-		if(form.body.value.length ==0){
-			alert('내용을 입력해주세요.');	
-			form.body.focus();
-			return 
-		}
-		form.submit();
-		ArticleWrite__submitFormDone = true;
-	}
+    form.title.value = form.title.value.trim();
+
+    if ( form.title.value.length == 0 ) {
+        alert('제목을 입력해주세요.');
+        form.title.focus();
+
+        return;
+    }
+
+    form.body.value = form.body.value.trim();
+
+    if ( form.body.value.length == 0 ) {
+        alert('내용을 입력해주세요.');
+        form.body.focus();
+
+        return;
+    }
+
+    form.submit();
+    ArticleWrite__submitFormDone = true;
+}
 </script>
 
 <div class="section section-article-list">
 	<div class="container mx-auto">
 	    <form method="POST" action="doWrite" onsubmit="ArticleWrite__submitForm(this); return false;">
-	    
-	    <input type="hidden" name="boardId" value="${board.id}" />
-	    
+	        <input type="hidden" name="boardId" value="${board.id}" />
 	        <div class="form-control">
                 <label class="label">
                     제목
@@ -52,8 +55,8 @@ let ArticleWrite__submitFormDone = false;
                 <textarea class="textarea textarea-bordered w-full h-24" placeholder="내용을 입력해주세요." name="body" maxlength="2000"></textarea>
             </div>
 
-            <div class="mt-4 <btn-wr></btn-wr>ap gap-1">
-                <button type="submit" class="btn btn-primary btn-sm mb-1">
+            <div class="mt-4 btn-wrap gap-1">
+                <button type="submit" href="#" class="btn btn-primary btn-sm mb-1">
                     <span><i class="fas fa-save"></i></span>
                     &nbsp;
                     <span>작성</span>

@@ -13,18 +13,25 @@ function MemberLogin__submitForm(form) {
     if ( MemberLogin__submitFormDone ) {
         return;
     }
+
     form.loginId.value = form.loginId.value.trim();
+
     if ( form.loginId.value.length == 0 ) {
         alert('로그인아이디를 입력해주세요.');
         form.loginId.focus();
+
         return;
     }
+
     form.loginPw.value = form.loginPw.value.trim();
+
     if ( form.loginPw.value.length == 0 ) {
         alert('로그인비밀번호을 입력해주세요.');
         form.loginPw.focus();
+
         return;
     }
+
     form.submit();
     MemberLogin__submitFormDone = true;
 }
@@ -33,7 +40,7 @@ function MemberLogin__submitForm(form) {
 <div class="section section-article-list px-2">
 	<div class="container mx-auto">
 	    <form method="POST" action="doLogin" onsubmit="MemberLogin__submitForm(this); return false;">
-	        <input type="hidden" name="redirectUrl" value="afterLoginUrl" />
+	        <input type="hidden" name="redirectUri" value="${param.afterLoginUri}" />
 	        <div class="form-control">
                 <label class="label">
                     로그인아이디

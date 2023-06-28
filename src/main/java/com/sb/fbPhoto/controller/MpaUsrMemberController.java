@@ -12,7 +12,10 @@ import com.sb.fbPhoto.dto.ResultData;
 import com.sb.fbPhoto.service.MemberService;
 import com.sb.fbPhoto.util.Util;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class MpaUsrMemberController {
     @Autowired
     private MemberService memberService;
@@ -21,21 +24,21 @@ public class MpaUsrMemberController {
     public String showLogin(HttpServletRequest req) {
         return "mpaUsr/member/login";
     }
-    
+
     @RequestMapping("/mpaUsr/member/doLogout")
     public String doLogout(HttpServletRequest req, HttpSession session) {
-    	   session.removeAttribute("loginedMemberId");
-    	   
-    	    String msg = "로그아웃 되었습니다.";
-    	     return Util.msgAndReplace(req, msg, "/");
+        session.removeAttribute("loginedMemberId");
+
+        String msg = "로그아웃 되었습니다.";
+        return Util.msgAndReplace(req, msg, "/");
     }
 
     @RequestMapping("/mpaUsr/member/doLogin")
-    public String doLogin(HttpServletRequest req, HttpSession session, String loginId, String loginPw, String redirectUrl) {
-    	if(Util.isEmpty(redirectUrl)) {
-    		redirectUrl = "/";
-    	}
-    	
+    public String doLogin(HttpServletRequest req, HttpSession session, String loginId, String loginPw, String redirectUri) {
+        if ( Util.isEmpty(redirectUri) ) {
+            redirectUri = "/";
+        }
+
         Member member = memberService.getMemberByLoginId(loginId);
 
         if (member == null) {
@@ -50,7 +53,7 @@ public class MpaUsrMemberController {
         session.setAttribute("loginedMemberId", member.getId());
 
         String msg = "환영합니다.";
-        return Util.msgAndReplace(req, msg, redirectUrl);
+        return Util.msgAndReplace(req, msg, redirectUri);
     }
 
     @RequestMapping("/mpaUsr/member/join")

@@ -1,5 +1,6 @@
 package com.sb.fbPhoto.config;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -9,17 +10,16 @@ import com.sb.fbPhoto.interceptor.BeforeActionInterceptor;
 import com.sb.fbPhoto.interceptor.NeedToLoginInterceptor;
 import com.sb.fbPhoto.interceptor.NeedToLogoutInterceptor;
 
-
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     // beforeActionInterceptor 인터셉터 불러오기
-    @Autowired    
+	@Autowired
     BeforeActionInterceptor beforeActionInterceptor;
-    
-    @Autowired    
+
+    @Autowired
     NeedToLoginInterceptor needToLoginInterceptor;
-    
-    @Autowired    
+
+    @Autowired
     NeedToLogoutInterceptor needToLogoutInterceptor;
 
     // 이 함수는 인터셉터를 적용하는 역할을 합니다.
@@ -30,23 +30,23 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/resource/**")
                 .excludePathPatterns("/error");
-        
+
         registry.addInterceptor(needToLoginInterceptor)
-        .addPathPatterns("/mpaUsr/article/write")
-        .addPathPatterns("/mpaUsr/article/doWrite")
-        .addPathPatterns("/mpaUsr/article/doDelete")
-        .addPathPatterns("/mpaUsr/article/modify")
-        .addPathPatterns("/mpaUsr/article/doModify");
-        
+                .addPathPatterns("/mpaUsr/article/write")
+                .addPathPatterns("/mpaUsr/article/doWrite")
+                .addPathPatterns("/mpaUsr/article/doDelete")
+                .addPathPatterns("/mpaUsr/article/modify")
+                .addPathPatterns("/mpaUsr/article/doModify");
+
         registry.addInterceptor(needToLogoutInterceptor)
-        .addPathPatterns("/mpaUsr/member/login")
-        .addPathPatterns("/mpaUsr/member/doLogin")
-        .addPathPatterns("/mpaUsr/member/join")
-        .addPathPatterns("/mpaUsr/member/doJoin")
-        .addPathPatterns("/mpaUsr/member/findLoginId")
-        .addPathPatterns("/mpaUsr/member/doFindLoginId")
-        .addPathPatterns("/mpaUsr/member/findLoginPw")
-        .addPathPatterns("/mpaUsr/member/doFindLoginPw");
-        
+                .addPathPatterns("/mpaUsr/member/login")
+                .addPathPatterns("/mpaUsr/member/doLogin")
+                .addPathPatterns("/mpaUsr/member/join")
+                .addPathPatterns("/mpaUsr/member/doJoin")
+                .addPathPatterns("/mpaUsr/member/findLoginId")
+                .addPathPatterns("/mpaUsr/member/doFindLoginId")
+                .addPathPatterns("/mpaUsr/member/findLoginPw")
+                .addPathPatterns("/mpaUsr/member/doFindLoginPw");
     }
 }
+
