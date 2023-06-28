@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sb.fbPhoto.dto.Article;
 import com.sb.fbPhoto.dto.Board;
-import com.sb.fbPhoto.dto.Req;
+import com.sb.fbPhoto.dto.Rq;
 import com.sb.fbPhoto.dto.ResultData;
 import com.sb.fbPhoto.service.ArticleService;
 import com.sb.fbPhoto.util.Util;
@@ -39,11 +39,7 @@ public class MpaUsrArticleController {
 
 	    @RequestMapping("/mpaUsr/article/write")
 	    public String showWrite(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId) {
-	    	Req rq = (Req)req.getAttribute("req");
-	    	if(rq.isNotLogined()) {
-	    		return Util.msgAndBack(req, "로그인 후 이용해주세요");
-	    	}
-	    	
+
 	        Board board = articleService.getBoardById(boardId);
 
 	        if (board == null) {
@@ -57,7 +53,7 @@ public class MpaUsrArticleController {
 
 	    @RequestMapping("/mpaUsr/article/doWrite")
 	    public String doWrite(HttpServletRequest req, int boardId, String title, String body) {
-	      	Req rq = (Req)req.getAttribute("req");
+	      	Rq rq = (Rq)req.getAttribute("req");
 	    	if(rq.isNotLogined()) {
 	    		return Util.msgAndBack(req, "로그인 후 이용해주세요");
 	    	}
