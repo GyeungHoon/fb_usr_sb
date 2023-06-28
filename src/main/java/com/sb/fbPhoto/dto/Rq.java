@@ -38,4 +38,9 @@ public class Rq {
 	private String getCurrentUrl() {
 		return currentUrl;
 	}
+	
+	public String getLoginPageUrl() {
+		
+		return "/member/login?afterLoginUrl=" + getEncodedCurrentUrl();
+	}
 }
