@@ -1,7 +1,5 @@
 package com.sb.fbPhoto.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +7,8 @@ import com.sb.fbPhoto.dao.ArticleDao;
 import com.sb.fbPhoto.dto.Article;
 import com.sb.fbPhoto.dto.Board;
 import com.sb.fbPhoto.dto.ResultData;
+
+import java.util.List;
 
 @Service
 public class ArticleService {

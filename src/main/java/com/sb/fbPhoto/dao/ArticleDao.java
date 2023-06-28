@@ -1,12 +1,12 @@
 package com.sb.fbPhoto.dao;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.sb.fbPhoto.dto.Article;
 import com.sb.fbPhoto.dto.Board;
+
+import java.util.List;
 
 @Mapper
 public interface ArticleDao {

@@ -1,9 +1,6 @@
 package com.sb.fbPhoto.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +13,8 @@ import com.sb.fbPhoto.dto.ResultData;
 import com.sb.fbPhoto.service.ArticleService;
 import com.sb.fbPhoto.util.Util;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @Slf4j

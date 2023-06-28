@@ -13,7 +13,7 @@ import com.sb.fbPhoto.interceptor.NeedToLogoutInterceptor;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     // beforeActionInterceptor 인터셉터 불러오기
-	@Autowired
+    @Autowired
     BeforeActionInterceptor beforeActionInterceptor;
 
     @Autowired
@@ -39,6 +39,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/mpaUsr/article/doModify");
 
         registry.addInterceptor(needToLogoutInterceptor)
+                .addPathPatterns("/mpaUsr/member/findLoginId")
+                .addPathPatterns("/mpaUsr/member/doFindLoginId")
+                .addPathPatterns("/mpaUsr/member/findLoginPw")
+                .addPathPatterns("/mpaUsr/member/doFindLoginPw")
                 .addPathPatterns("/mpaUsr/member/login")
                 .addPathPatterns("/mpaUsr/member/doLogin")
                 .addPathPatterns("/mpaUsr/member/join")
