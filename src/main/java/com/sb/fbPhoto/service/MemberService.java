@@ -28,8 +28,11 @@ public class MemberService {
     }
 
     public ResultData join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
-        memberDao.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+    	loginPw = Util.sha256(loginPw);
+    	memberDao.join(loginId, loginPw, name, nickname, cellphoneNo, email);
         int id = memberDao.getLastInsertId();
+        
+        
 
         return new ResultData("S-1", "회원가입이 완료되었습니다.", "id", id);
     }
@@ -60,6 +63,8 @@ public class MemberService {
     }
 
     private void setTempPassword(Member actor, String tempPassword) {
+    	
+    	tempPassword = Util.sha256(tempPassword);
         memberDao.modify(actor.getId(), tempPassword, null, null, null, null);
     }
 }
