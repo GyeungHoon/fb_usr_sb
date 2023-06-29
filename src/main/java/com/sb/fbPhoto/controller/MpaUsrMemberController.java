@@ -1,24 +1,49 @@
 package com.sb.fbPhoto.controller;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sb.fbPhoto.dto.Member;
 import com.sb.fbPhoto.dto.ResultData;
+import com.sb.fbPhoto.dto.Rq;
 import com.sb.fbPhoto.service.MemberService;
 import com.sb.fbPhoto.util.Util;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
 public class MpaUsrMemberController {
     @Autowired
     private MemberService memberService;
-    
+
+    @RequestMapping("/mpaUsr/member/modify")
+    public String showModify(HttpServletRequest req) {
+        return "mpaUsr/member/modify";
+    }
+
+    @RequestMapping("/mpaUsr/member/doModify")
+    public String doModify(HttpServletRequest req, String loginPw, String name, String
+            nickname, String cellphoneNo, String email) {
+
+        if ( loginPw != null && loginPw.trim().length() == 0 ) {
+            loginPw = null;
+        }
+
+        int id = ((Rq)req.getAttribute("rq")).getLoginedMemberId();
+        ResultData modifyRd = memberService.modify(id, loginPw, name, nickname, cellphoneNo, email);
+
+        if (modifyRd.isFail()) {
+            return Util.msgAndBack(req, modifyRd.getMsg());
+        }
+
+        return Util.msgAndReplace(req, modifyRd.getMsg(), "/");
+    }
+
     @RequestMapping("/mpaUsr/member/mypage")
     public String showMypage(HttpServletRequest req) {
         return "mpaUsr/member/mypage";
@@ -58,7 +83,6 @@ public class MpaUsrMemberController {
 
         return Util.msgAndReplace(req, notifyTempLoginPwByEmailRs.getMsg(), redirectUri);
     }
-
 
     @RequestMapping("/mpaUsr/member/findLoginId")
     public String showFindLoginId(HttpServletRequest req) {
