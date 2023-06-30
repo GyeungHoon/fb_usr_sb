@@ -10,9 +10,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
 <script>
-
+let MemberLogin__submitFormDone = false;
 function MemberLogin__submitForm(form) {
-
+    if ( MemberLogin__submitFormDone ) {
+        return;
+    }
 
     form.loginId.value = form.loginId.value.trim();
 
@@ -36,7 +38,7 @@ function MemberLogin__submitForm(form) {
     form.loginPwInput.value = '';
 
     form.submit();
-    
+    MemberLogin__submitFormDone = true;
 }
 </script>
 
