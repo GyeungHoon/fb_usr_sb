@@ -124,8 +124,9 @@ public class MpaUsrMemberController {
         if (member == null) {
             return Util.msgAndBack(req, loginId + "(은)는 존재하지 않는 로그인아이디 입니다.");
         }
-
+        System.out.println("여기에요!!!!!"+loginPw);
         if (member.getLoginPw().equals(loginPw) == false) {
+        	
             return Util.msgAndBack(req, "비밀번호가 일치하지 않습니다.");
         }
 

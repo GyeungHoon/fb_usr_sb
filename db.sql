@@ -163,9 +163,9 @@ cellphoneNo = '01012343333';
 #로그인비번 컬럼의 길이를 100으로 늘림
 ALTER TABLE `member` MODIFY COLUMN loginPw VARCHAR(100) NOT NULL;
 
-#기존 회원의 비밀번호를 암호화 해서 저장
+기존 회원의 비밀번호를 암호화 해서 저장
 UPDATE `member`
 SET loginPw = SHA2(loginPw,256);
 
-SELECT * FROM MEMBER;
-SELECT SHA2('e4106d091a84a6de02c4ee1b5d68e80afbc1cfdb38f4fbb053b7585b48688afd',256);
+#SELECT * FROM MEMBER;
+#SELECT SHA2('e4106d091a84a6de02c4ee1b5d68e80afbc1cfdb38f4fbb053b7585b48688afd',256);
