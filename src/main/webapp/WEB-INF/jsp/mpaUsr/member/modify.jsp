@@ -15,70 +15,49 @@ function MemberModify__submitForm(form) {
     if ( MemberModify__submitFormDone ) {
         return;
     }
-
     form.loginPwInput.value = form.loginPwInput.value.trim();
-
     if ( form.loginPwInput.value.length > 0 ) {
         form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
-
         if ( form.loginPwConfirm.value.length == 0 ) {
             alert('로그인비밀번호 확인을 입력해주세요.');
             form.loginPwConfirm.focus();
-
             return;
         }
-
         if ( form.loginPwInput.value != form.loginPwConfirm.value ) {
             alert('로그인비밀번호가 일치하지 않습니다.');
             form.loginPwConfirm.focus();
-
             return;
         }
     }
-
     form.name.value = form.name.value.trim();
-
     if ( form.name.value.length == 0 ) {
         alert('이름을 입력해주세요.');
         form.name.focus();
-
         return;
     }
-
     form.nickname.value = form.nickname.value.trim();
-
     if ( form.nickname.value.length == 0 ) {
         alert('별명을 입력해주세요.');
         form.nickname.focus();
-
         return;
     }
-
     form.cellphoneNo.value = form.cellphoneNo.value.trim();
-
     if ( form.cellphoneNo.value.length == 0 ) {
         alert('휴대전화번호를 입력해주세요.');
         form.cellphoneNo.focus();
-
         return;
     }
-
-
     form.email.value = form.email.value.trim();
-
     if ( form.email.value.length == 0 ) {
         alert('이메일을 입력해주세요.');
         form.email.focus();
-
         return;
     }
-
     if ( form.loginPwInput.value.length > 0 ) {
         form.loginPw.value = sha256(form.loginPwInput.value);
         form.loginPwInput.value = '';
         form.loginPwConfirm.value = '';
     }
-
     form.submit();
     MemberModify__submitFormDone = true;
 }
@@ -87,6 +66,7 @@ function MemberModify__submitForm(form) {
 <div class="section section-member-modify px-2">
 	<div class="container mx-auto">
 	    <form method="POST" action="doModify" onsubmit="MemberModify__submitForm(this); return false;">
+	        <input type="hidden" name="checkPasswordAuthCode" value="${param.checkPasswordAuthCode}">
 	        <input type="hidden" name="loginPw">
 	        <div class="form-control">
                 <label class="label">
