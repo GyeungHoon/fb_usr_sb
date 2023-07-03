@@ -10,7 +10,6 @@ import com.sb.fbPhoto.dao.MemberDao;
 import com.sb.fbPhoto.dto.Member;
 import com.sb.fbPhoto.dto.ResultData;
 import com.sb.fbPhoto.util.Util;
-
 @Service
 public class MemberService {
 
@@ -35,6 +34,8 @@ public class MemberService {
     public ResultData join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
         memberDao.join(loginId, loginPw, name, nickname, cellphoneNo, email);
         int id = memberDao.getLastInsertId();
+
+        attrService.setValue("member", id, "extra", "needToChangePassword", "0", Util.getDateStrLater(60 * 60 * 24 * 10));
 
         return new ResultData("S-1", "회원가입이 완료되었습니다.", "id", id);
     }
@@ -67,11 +68,17 @@ public class MemberService {
     }
 
     private void setTempPassword(Member actor, String tempPassword) {
+        attrService.setValue("member", actor.getId(), "extra", "useTempPassword", "1", null);
         memberDao.modify(actor.getId(), tempPassword, null, null, null, null);
     }
 
     public ResultData modify(int id, String loginPw, String name, String nickname, String cellphoneNo, String email) {
         memberDao.modify(id, loginPw, name, nickname, cellphoneNo, email);
+
+        if (loginPw != null) {
+            attrService.setValue("member", id, "extra", "needToChangePassword", "0", Util.getDateStrLater(60 * 60 * 24 * 10));
+            attrService.remove("member", id, "extra", "useTempPassword");
+        }
 
         return new ResultData("S-1", "회원정보가 수정되었습니다.", "id", id);
     }
@@ -92,5 +99,13 @@ public class MemberService {
         attrService.setValue(attrName, authCode, expireDate);
 
         return authCode;
+    }
+
+    public boolean usingTempPassword(int actorId) {
+        return attrService.getValue("member", actorId, "extra", "useTempPassword").equals("1");
+    }
+
+    public boolean needToChangePassword(int actorId) {
+        return attrService.getValue("member", actorId, "extra", "needToChangePassword").equals("0") == false;
     }
 }
