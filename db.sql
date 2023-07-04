@@ -1,3 +1,4 @@
+
 # 게시물 테이블 생성
 CREATE TABLE article (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '번호',
@@ -210,5 +211,16 @@ CREATE TABLE `reply` (
 # 인덱스를 건다.
 ALTER TABLE `reply` ADD KEY (`relTypeCode`, `relId`);
 
-
-SELECT * FROM reply
+# 임시로 만들어진 회원은, 비번변경할 필요가 없도록 설정
+INSERT INTO attr (
+    regDate,
+	updateDate,
+	relTypeCode,
+	relId,
+	typeCode,
+	type2Code,
+	`value`,
+	expireDate
+)
+SELECT NOW(), NOW(), 'member', id, 'extra', 'needToChangePassword', 0, NULL
+FROM `member`
