@@ -89,6 +89,17 @@ public class Util {
         return sb.toString();
     }
 
+    public static String toJsonStr(Object obj) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
     public static String toJsonStr(Map<String, Object> param) {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -386,5 +397,15 @@ public class Util {
         String dateStr = format.format(System.currentTimeMillis() + seconds * 1000);
 
         return dateStr;
+    }
+
+    public static <T> T fromJsonStr(String jsonStr, Class<T> cls) {
+        ObjectMapper om = new ObjectMapper();
+        try {
+            return (T) om.readValue(jsonStr, cls);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
