@@ -1,19 +1,35 @@
 package com.sb.fbPhoto.dto;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import com.sb.fbPhoto.dao.ReplyDao;
-
-@Service
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Reply {
-    @Autowired
-    private ReplyDao replyDao;
+    private int id;
+    private String regDate;
+    private String updateDate;
+    private String relTypeCode;
+    private int relId;
+    private int memberId;
+    private int parentId;
+    private String body;
+    private boolean blindStatus;
+    private String blindDate;
+    private boolean delStatus;
+    private String delDate;
+    private int likeCount;
+    private int dislikeCount;
 
-    public ResultData write(String relTypeCode, int relId, int memberId, String body) {
-        replyDao.write(relTypeCode, relId, memberId, body);
-        int id = replyDao.getLastInsertId();
+    private String extra__writerName;
 
-        return new ResultData("S-1", "댓글이 작성되었습니다.", "id", id);
+    public String getBodyForPrint() {
+        String bodyForPrint = body.replaceAll("\r\n", "<br>");
+        bodyForPrint = bodyForPrint.replaceAll("\r", "<br>");
+        bodyForPrint = bodyForPrint.replaceAll("\n", "<br>");
+
+        return bodyForPrint;
     }
 }

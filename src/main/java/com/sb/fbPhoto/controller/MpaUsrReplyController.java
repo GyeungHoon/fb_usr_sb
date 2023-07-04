@@ -7,10 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sb.fbPhoto.dto.Article;
-import com.sb.fbPhoto.dto.Reply;
 import com.sb.fbPhoto.dto.ResultData;
 import com.sb.fbPhoto.dto.Rq;
 import com.sb.fbPhoto.service.ArticleService;
+import com.sb.fbPhoto.service.ReplyService;
 import com.sb.fbPhoto.util.Util;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ public class MpaUsrReplyController {
     @Autowired
     private ArticleService articleService;
     @Autowired
-    private Reply replyService;
+    private ReplyService replyService;
 
     @RequestMapping("/mpaUsr/reply/doWrite")
     public String showWrite(HttpServletRequest req, String relTypeCode, int relId, String body, String redirectUri) {

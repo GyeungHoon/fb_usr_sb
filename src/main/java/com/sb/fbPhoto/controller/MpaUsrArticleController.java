@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sb.fbPhoto.dto.Article;
 import com.sb.fbPhoto.dto.Board;
+import com.sb.fbPhoto.dto.Reply;
 import com.sb.fbPhoto.dto.ResultData;
 import com.sb.fbPhoto.dto.Rq;
 import com.sb.fbPhoto.service.ArticleService;
+import com.sb.fbPhoto.service.ReplyService;
 import com.sb.fbPhoto.util.Util;
 
 import lombok.extern.slf4j.Slf4j;
-
 @Controller
 @Slf4j
 public class MpaUsrArticleController {
@@ -26,9 +27,13 @@ public class MpaUsrArticleController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private ReplyService replyService;
+
     @RequestMapping("/mpaUsr/article/detail")
     public String showDetail(HttpServletRequest req, int id) {
         Article article = articleService.getForPrintArticleById(id);
+        List<Reply> replies = replyService.getForPrintRepliesByRelTypeCodeAndRelId("article", id);
 
         if (article == null) {
             return Util.msgAndBack(req, id + "번 게시물이 존재하지 않습니다.");
@@ -36,6 +41,7 @@ public class MpaUsrArticleController {
 
         Board board = articleService.getBoardById(article.getBoardId());
 
+        req.setAttribute("replies", replies);
         req.setAttribute("article", article);
         req.setAttribute("board", board);
 
@@ -66,7 +72,7 @@ public class MpaUsrArticleController {
         }
 
         Rq rq = (Rq)req.getAttribute("rq");
-        
+
         int memberId = rq.getLoginedMemberId();
 
         ResultData writeArticleRd = articleService.writeArticle(boardId, memberId, title, body);
