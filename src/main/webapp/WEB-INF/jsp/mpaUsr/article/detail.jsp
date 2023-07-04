@@ -83,7 +83,7 @@
                     <form method="POST" action="../reply/doWrite" class="relative flex py-4 text-gray-600 focus-within:text-gray-400">
                         <input type="hidden" name="relTypeCode" value="article" />
                         <input type="hidden" name="relId" value="${article.id}" />
-                        
+                        <input type="hidden" name="redirectUri" value="${rq.currentUri}" />
                         <img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200">
 
                         <span class="absolute inset-y-0 right-0 flex items-center pr-6">

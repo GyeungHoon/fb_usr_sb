@@ -133,8 +133,8 @@ loginId = 'user1',
 loginPw = 'user1',
 `name` = '유저1이름',
 nickname = '유저1별명',
-email = 'java111@gmail.com',
-cellphoneNo = '01012341111';
+email = 'jangka512@gmail.com',
+cellphoneNo = '01012341234';
 
 # 회원 테스트 데이터 생성
 ## 2번 회원 생성
@@ -145,8 +145,8 @@ loginId = 'user2',
 loginPw = 'user2',
 `name` = '유저2이름',
 nickname = '유저2별명',
-email = 'java222@gmail.com',
-cellphoneNo = '0101234222';
+email = 'jangka512@gmail.com',
+cellphoneNo = '01012341234';
 
 # 회원 테스트 데이터 생성
 ## 3번 회원 생성
@@ -157,19 +157,15 @@ loginId = 'user3',
 loginPw = 'user3',
 `name` = '유저3이름',
 nickname = '유저3별명',
-email = 'java333@gmail.com',
-cellphoneNo = '01012343333';
+email = 'jangka512@gmail.com',
+cellphoneNo = '01012341234';
 
-#로그인비번 컬럼의 길이를 100으로 늘림
+# 로그인비번 칼럼의 길이를 100으로 늘림
 ALTER TABLE `member` MODIFY COLUMN loginPw VARCHAR(100) NOT NULL;
 
-#기존 회원의 비밀번호를 암호화 해서 저장
+# 기존 회원의 비밀번호를 암호화 해서 저장
 UPDATE `member`
-SET loginPw = SHA2(loginPw,256);
-
-SELECT * FROM MEMBER;
-#SELECT SHA2('e4106d091a84a6de02c4ee1b5d68e80afbc1cfdb38f4fbb053b7585b48688afd',256);
-
+SET loginPw = SHA2(loginPw, 256);
 
 # 부가정보테이블
 # 댓글 테이블 추가
@@ -195,4 +191,13 @@ ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
 # attr에 만료날짜 추가
 ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`;
 
-
+# 댓글 테이블 생성
+CREATE TABLE `reply` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '번호',
+    regDate DATETIME NOT NULL COMMENT '작성날짜',
+    updateDate DATETIME NOT NULL COMMENT '수정날짜',
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입',
+    relId INT(10) UNSIGNED NOT NULL COMMENT '관련 데이터 ID',
+    memberId INT(10) UNSIGNED NOT NULL COMMENT '회원 ID',
+    `body` TEXT NOT NULL COMMENT '내용'
+);
