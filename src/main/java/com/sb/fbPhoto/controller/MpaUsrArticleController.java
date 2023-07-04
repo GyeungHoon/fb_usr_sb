@@ -1,6 +1,9 @@
 package com.sb.fbPhoto.controller;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sb.fbPhoto.dto.Article;
 import com.sb.fbPhoto.dto.Board;
 import com.sb.fbPhoto.dto.ResultData;
+import com.sb.fbPhoto.dto.Rq;
 import com.sb.fbPhoto.service.ArticleService;
 import com.sb.fbPhoto.util.Util;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
@@ -62,7 +65,9 @@ public class MpaUsrArticleController {
             return Util.msgAndBack(req, "내용을 입력해주세요.");
         }
 
-        int memberId = 3; // 임시
+        Rq rq = (Rq)req.getAttribute("rq");
+        
+        int memberId = rq.getLoginedMemberId();
 
         ResultData writeArticleRd = articleService.writeArticle(boardId, memberId, title, body);
 
