@@ -63,6 +63,10 @@ public class MpaUsrReplyController {
 
         ResultData writeResultData = replyService.write(relTypeCode, relId, memberId, body);
 
+        int newReplyId = (int)writeResultData.getBody().get("id");
+
+        redirectUri = Util.getNewUri(redirectUri, "focusReplyId", newReplyId + "");
+
         return Util.msgAndReplace(req, writeResultData.getMsg(), redirectUri);
     }
 }

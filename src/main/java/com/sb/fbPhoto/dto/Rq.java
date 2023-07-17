@@ -23,6 +23,10 @@ public class Rq {
         this.needToChangePassword = needToChangePassword;
     }
 
+    public String getParamJsonStr() {
+        return Util.toJsonStr(paramMap);
+    }
+
     public boolean isLogined() {
         return loginedMember != null;
     }
