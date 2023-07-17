@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sb.fbPhoto.dto.Article;
+import com.sb.fbPhoto.dto.Reply;
 import com.sb.fbPhoto.dto.ResultData;
 import com.sb.fbPhoto.dto.Rq;
 import com.sb.fbPhoto.service.ArticleService;
@@ -24,8 +25,27 @@ public class MpaUsrReplyController {
     @Autowired
     private ReplyService replyService;
 
+    @RequestMapping("/mpaUsr/reply/doDelete")
+    public String doDelete(HttpServletRequest req, int id, String redirectUri) {
+        Reply reply = replyService.getReplyById(id);
+
+        if ( reply == null ) {
+            return Util.msgAndBack(req, "존재하지 않는 댓글입니다.");
+        }
+
+        Rq rq = (Rq)req.getAttribute("rq");
+
+        if ( reply.getMemberId() != rq.getLoginedMemberId() ) {
+            return Util.msgAndBack(req, "권한이 없습니다.");
+        }
+
+        ResultData deleteResultData = replyService.delete(id);
+
+        return Util.msgAndReplace(req, deleteResultData.getMsg(), redirectUri);
+    }
+
     @RequestMapping("/mpaUsr/reply/doWrite")
-    public String showWrite(HttpServletRequest req, String relTypeCode, int relId, String body, String redirectUri) {
+    public String doWrite(HttpServletRequest req, String relTypeCode, int relId, String body, String redirectUri) {
         switch ( relTypeCode ) {
             case "article":
                 Article article = articleService.getArticleById(relId);
