@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.sb.fbPhoto.interceptor.BeforeActionInterceptor;
 import com.sb.fbPhoto.interceptor.NeedToLoginInterceptor;
 import com.sb.fbPhoto.interceptor.NeedToLogoutInterceptor;
-
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     // beforeActionInterceptor 인터셉터 불러오기
@@ -39,6 +38,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/mpaUsr/article/doModify")
                 .addPathPatterns("/mpaUsr/reply/doWrite")
                 .addPathPatterns("/mpaUsr/reply/doDelete")
+                .addPathPatterns("/mpaUsr/reply/doDeleteAjax")
                 .addPathPatterns("/mpaUsr/reply/modify")
                 .addPathPatterns("/mpaUsr/reply/doModify")
                 .addPathPatterns("/mpaUsr/member/modify")
