@@ -1,15 +1,20 @@
 package com.sb.fbPhoto.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.sb.fbPhoto.dto.Member;
 import com.sb.fbPhoto.dto.ResultData;
 import com.sb.fbPhoto.dto.Rq;
+import com.sb.fbPhoto.service.GenFileService;
 import com.sb.fbPhoto.service.MemberService;
 import com.sb.fbPhoto.util.Util;
 
@@ -20,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MpaUsrMemberController {
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private GenFileService genFileService;
 
     // checkPasswordAuthCode : 체크비밀번호인증코드
     @RequestMapping("/mpaUsr/member/modify")
@@ -176,7 +183,8 @@ public class MpaUsrMemberController {
 
     @RequestMapping("/mpaUsr/member/doJoin")
     public String doJoin(HttpServletRequest req, String loginId, String loginPw, String name, String
-            nickname, String cellphoneNo, String email) {
+            nickname, String cellphoneNo, String email, MultipartRequest multipartRequest) {
+
         Member oldMember = memberService.getMemberByLoginId(loginId);
 
         if (oldMember != null) {
@@ -187,6 +195,18 @@ public class MpaUsrMemberController {
 
         if (joinRd.isFail()) {
             return Util.msgAndBack(req, joinRd.getMsg());
+        }
+
+        int newMemberId = (int)joinRd.getBody().get("id");
+
+        Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+        for (String fileInputName : fileMap.keySet()) {
+            MultipartFile multipartFile = fileMap.get(fileInputName);
+
+            if ( multipartFile.isEmpty() == false ) {
+                genFileService.save(multipartFile, newMemberId);
+            }
         }
 
         return Util.msgAndReplace(req, joinRd.getMsg(), "/");
