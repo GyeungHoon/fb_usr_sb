@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sb.fbPhoto.dao.ReplyDao">
-  <select id="getLastInsertId" resultType="int">
+    <select id="getLastInsertId" resultType="int">
         SELECT LAST_INSERT_ID()
     </select>
 
@@ -40,6 +40,15 @@
         memberId = #{memberId},
         body = #{body}
     </insert>
+
+    <update id="modify">
+        UPDATE reply
+        <set>
+            updateDate = NOW(),
+            body = #{body},
+        </set>
+        WHERE id = #{id}
+    </update>
 
     <update id="delete">
         UPDATE reply
