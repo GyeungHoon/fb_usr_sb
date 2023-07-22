@@ -1,3 +1,8 @@
+# DB 생성
+DROP DATABASE IF EXISTS photoboast;
+CREATE DATABASE photoboast;
+USE photoboast;
+
 # 게시물 테이블 생성
 CREATE TABLE article (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '번호',

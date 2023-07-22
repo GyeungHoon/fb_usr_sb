@@ -43,4 +43,8 @@ public class Member {
     public String getProfileFallbackImgOnErrorHtmlAttr() {
         return "this.src = '" + getProfileFallbackImgUri() + "'";
     }
+
+    public String getRemoveProfileImgIfNotExistsOnErrorHtmlAttr() {
+        return "$(this).remove();";
+    }
 }

@@ -15,49 +15,85 @@ function MemberModify__submitForm(form) {
     if ( MemberModify__submitFormDone ) {
         return;
     }
+
     form.loginPwInput.value = form.loginPwInput.value.trim();
+
     if ( form.loginPwInput.value.length > 0 ) {
         form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+
         if ( form.loginPwConfirm.value.length == 0 ) {
             alert('로그인비밀번호 확인을 입력해주세요.');
             form.loginPwConfirm.focus();
+
             return;
         }
+
         if ( form.loginPwInput.value != form.loginPwConfirm.value ) {
             alert('로그인비밀번호가 일치하지 않습니다.');
             form.loginPwConfirm.focus();
+
             return;
         }
     }
+
     form.name.value = form.name.value.trim();
+
     if ( form.name.value.length == 0 ) {
         alert('이름을 입력해주세요.');
         form.name.focus();
+
         return;
     }
+
     form.nickname.value = form.nickname.value.trim();
+
     if ( form.nickname.value.length == 0 ) {
         alert('별명을 입력해주세요.');
         form.nickname.focus();
+
         return;
     }
+
+    const maxSizeMb = 10;
+
+    const maxSize = maxSizeMb * 1024 * 1024;
+
+    const profileImgFileInput = form["file__member__0__extra__profileImg__1"];
+
+    if (profileImgFileInput.value) {
+        if (profileImgFileInput.files[0].size > maxSize) {
+            alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
+            profileImgFileInput.focus();
+
+            return;
+        }
+    }
+
     form.cellphoneNo.value = form.cellphoneNo.value.trim();
+
     if ( form.cellphoneNo.value.length == 0 ) {
         alert('휴대전화번호를 입력해주세요.');
         form.cellphoneNo.focus();
+
         return;
     }
+
+
     form.email.value = form.email.value.trim();
+
     if ( form.email.value.length == 0 ) {
         alert('이메일을 입력해주세요.');
         form.email.focus();
+
         return;
     }
+
     if ( form.loginPwInput.value.length > 0 ) {
         form.loginPw.value = sha256(form.loginPwInput.value);
         form.loginPwInput.value = '';
         form.loginPwConfirm.value = '';
     }
+
     form.submit();
     MemberModify__submitFormDone = true;
 }
@@ -65,7 +101,7 @@ function MemberModify__submitForm(form) {
 
 <div class="section section-member-modify px-2">
 	<div class="container mx-auto">
-	    <form method="POST" action="doModify" onsubmit="MemberModify__submitForm(this); return false;">
+	    <form method="POST" enctype="multipart/form-data" action="doModify" onsubmit="MemberModify__submitForm(this); return false;">
 	        <input type="hidden" name="checkPasswordAuthCode" value="${param.checkPasswordAuthCode}">
 	        <input type="hidden" name="loginPw">
 	        <div class="form-control">
@@ -103,6 +139,14 @@ function MemberModify__submitForm(form) {
                     별명
                 </label>
                 <input value="${rq.loginedMember.nickname}" class="input input-bordered w-full" type="text" maxlength="30" name="nickname" placeholder="별명을 입력해주세요." />
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    프로필 이미지
+                </label>
+                <img class="w-40 h-40 mb-2 object-cover rounded-full" onerror="${rq.loginedMember.removeProfileImgIfNotExistsOnErrorHtmlAttr}" src="${rq.loginedMember.profileImgUri}" alt="">
+                <input accept="image/gif, image/jpeg, image/png" type="file" name="file__member__0__extra__profileImg__1" placeholder="프로필 이미지를 선택해주세요." />
             </div>
 
             <div class="form-control">
