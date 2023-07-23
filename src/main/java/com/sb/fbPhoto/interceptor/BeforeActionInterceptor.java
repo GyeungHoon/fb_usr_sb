@@ -1,6 +1,11 @@
 package com.sb.fbPhoto.interceptor;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -10,10 +15,7 @@ import com.sb.fbPhoto.dto.Rq;
 import com.sb.fbPhoto.service.MemberService;
 import com.sb.fbPhoto.util.Util;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
@@ -103,7 +105,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
             needToChangePassword = (boolean) session.getAttribute("needToChangePassword");
         }
 
-        req.setAttribute("rq", new Rq(isAjax(req), loginedMember, currentUri, paramMap, needToChangePassword));
+        req.setAttribute("rq", new Rq(isAjax(req), memberService.isAdmin(loginedMember), loginedMember, currentUri, paramMap, needToChangePassword));
 
         return HandlerInterceptor.super.preHandle(req, resp, handler);
     }
