@@ -1,5 +1,6 @@
 package com.sb.fbPhoto.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,15 @@ public class MpaAdmMemberController {
     private MemberService memberService;
     @Autowired
     private GenFileService genFileService;
+
+    @RequestMapping("/mpaAdm/member/list")
+    public String showList(HttpServletRequest req) {
+        List<Member> members = memberService.getForPrintMembers();
+
+        req.setAttribute("members", members);
+
+        return "mpaAdm/member/list";
+    }
 
     // checkPasswordAuthCode : 체크비밀번호인증코드
     @RequestMapping("/mpaAdm/member/modify")

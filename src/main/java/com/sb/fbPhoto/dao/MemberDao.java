@@ -1,10 +1,11 @@
 package com.sb.fbPhoto.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.sb.fbPhoto.dto.Member;
-
 @Mapper
 public interface MemberDao {
     Member getMemberByLoginId(@Param("loginId") String loginId);
@@ -18,4 +19,6 @@ public interface MemberDao {
     int getLastInsertId();
 
     Member getMemberByNameAndEmail(@Param("name") String name, @Param("email") String email);
+
+    List<Member> getForPrintMembers();
 }

@@ -1,5 +1,6 @@
 package com.sb.fbPhoto.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,5 +149,9 @@ public class MemberService {
 
     public boolean needToChangePassword(int actorId) {
         return attrService.getValue("member", actorId, "extra", "needToChangePassword").equals("0") == false;
+    }
+
+    public List<Member> getForPrintMembers() {
+        return memberDao.getForPrintMembers();
     }
 }
